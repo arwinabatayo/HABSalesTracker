@@ -1,0 +1,96 @@
+/* =Fonts
+-------------------------------------------------------------- */
+
+@font-face { 
+    font-family: 'gothambook';
+    src: url('../fonts/gothambook.ttf');
+    src: url('../fonts/gothambook.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothambook.woff') format('woff'),
+         url('../fonts/gothambook.ttf') format('truetype'),
+         url('../fonts/gothambook.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face { 
+    font-family: 'gothambook';
+    src: url('../fonts/gothambookitalic.ttf');
+    src: url('../fonts/gothambookitalic.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothambookitalic.woff') format('woff'),
+         url('../fonts/gothambookitalic.ttf') format('truetype'),
+         url('../fonts/gothambookitalic.svg') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+@font-face { 
+    font-family: 'gothambook';
+    src: url('../fonts/gothambold.ttf');
+    src: url('../fonts/gothambold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothambold.woff') format('woff'),
+         url('../fonts/gothambold.ttf') format('truetype'),
+         url('../fonts/gothambold.svg') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face { 
+    font-family: 'gothamlight';
+    src: url('../fonts/gothamlight.ttf');
+    src: url('../fonts/gothamlight.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothamlight.woff') format('woff'),
+         url('../fonts/gothamlight.ttf') format('truetype'),
+         url('../fonts/gothamlight.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face { 
+    font-family: 'gothamlight';
+    src: url('../fonts/gothamlightitalic.ttf');
+    src: url('../fonts/gothamlightitalic.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothamlightitalic.woff') format('woff'),
+         url('../fonts/gothamlightitalic.ttf') format('truetype'),
+         url('../fonts/gothamlightitalic.svg') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face { 
+    font-family: 'gothammedium';
+    src: url('../fonts/gothammedium.ttf');
+    src: url('../fonts/gothammedium.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothammedium.woff') format('woff'),
+         url('../fonts/gothammedium.ttf') format('truetype'),
+         url('../fonts/gothammedium.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face { 
+    font-family: 'gothammedium';
+    src: url('../fonts/gothammediumitalic.ttf');
+    src: url('../fonts/gothammediumitalic.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothammediumitalic.woff') format('woff'),
+         url('../fonts/gothammediumitalic.ttf') format('truetype'),
+         url('../fonts/gothammediumitalic.svg') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face { 
+    font-family: 'gothambold';
+    src: url('../fonts/gothambold.ttf');
+    src: url('../fonts/gothambold.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothambold.woff') format('woff'),
+         url('../fonts/gothambold.ttf') format('truetype'),
+         url('../fonts/gothambold.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face { 
+    font-family: 'gothambold';
+    src: url('../fonts/gothambolditalic.ttf');
+    src: url('../fonts/gothambolditalic.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/gothambolditalic.woff') format('woff'),
+         url('../fonts/gothambolditalic.ttf') format('truetype'),
+         url('../fonts/gothambolditalic.svg') format('svg');
+    font-weight: normal;
+    font-style: italic;
+}

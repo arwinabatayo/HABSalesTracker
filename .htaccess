@@ -1,0 +1,17 @@
+Options +SymLinksIfOwnerMatch
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteCond $1 !^(index\.php|templates|robots\.txt)
+	RewriteRule ^(.*)$ index.php/$1 [L]
+</IfModule>
+
+<IfModule mod_mime.c>
+	AddType	application/x-httpd-php .html
+	AddType	font/opentype .otf
+	AddType	font/ttf .ttf
+	AddType font/x-woff .woff
+	AddType image/svg+xml .svg
+	AddType application/vnd.ms-fontobject .eot
+	AddType text/css .less
+</IfModule>

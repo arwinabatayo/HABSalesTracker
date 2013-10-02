@@ -1,0 +1,22 @@
+i.sidebar-agency,
+i.sidebar-altitude,
+i.sidebar-gondola,
+i.sidebar-burner,
+i.sidebar-envelope {
+	background: url("../images/icon-sidebar.png") no-repeat;
+}
+i.sidebar-agency {
+	background-position: 0px 0px;
+}
+i.sidebar-altitude {
+	background-position: -24px 0px;
+}
+i.sidebar-gondola {
+	background-position: -48px 0px;
+}
+i.sidebar-burner {
+	background-position: -72px 0px;
+}
+i.sidebar-envelope {
+	background-position: -96px 0px;
+}
