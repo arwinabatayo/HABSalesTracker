@@ -242,7 +242,14 @@
 						}
 					},
 					error: function (xhr, ajaxOptions, thrownError) {
-						alert('Error: (' + xhr.status + ' ' + thrownError + ')');
+						if (xhr.status == 200)
+						{
+							location.reload(true);
+						}
+						else
+						{
+							alert('Error: (' + xhr.status + ' ' + thrownError + ')');
+						}
 					},
 				});
 			}

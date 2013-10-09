@@ -1,5 +1,5 @@
 							<!-- Page Layout -->
-							<div class="panel panel-default" style="margin-bottom: 0px;">
+							<div class="panel panel-default hover" style="margin-bottom: 0px;">
 								<div class="panel-heading" style="margin-bottom: 0px;">
 									<b class="pull-left"><?php echo lang('projects_cost_of_sale');?></b>
 									<div class="btn-group pull-right">
@@ -13,11 +13,42 @@
 									
 									<?php foreach($project_data[0]->cost_of_sales as $k => $v): ?>
 									<li class="list-group-item" id="project_cost_of_sale_type_<?php echo $project_data[0]->cost_of_sales[$k]->cost_of_sale_id;?>">
-										<?php echo $project_data[0]->cost_of_sales[$k]->type;?>
+										<b><?php echo $project_data[0]->cost_of_sales[$k]->type;?></b>
 										<p class="pull-right text-left" id="project_cost_of_sale_budget_<?php echo $project_data[0]->cost_of_sales[$k]->cost_of_sale_id;?>">
 											<b class="number-format"><?php echo $project_data[0]->cost_of_sales[$k]->budget;?></b>
 											<a href="<?php echo site_url('projects/edit_cos');?>" class="btn btn-primary btn-xs project_edit_cost_of_sale" data-project-id="<?php echo $project_data[0]->project_id;?>" data-cost-of-sale-id="<?php echo $project_data[0]->cost_of_sales[$k]->cost_of_sale_id;?>" style="margin-left: 10px;"><i class="icon-edit"></i></a>
 										</p>
+										
+										 <div class="table-responsive">
+										 	<h4>2013</h4>
+											<table class="table table-bordered">
+												
+												<thead>
+													<tr>
+														<th>#</th>
+														<th>Source</th>
+														<th>Jan</th>
+														<th>Table heading</th>
+														<th>Table heading</th>
+														<th>Table heading</th>
+														<th>Table heading</th>
+													</tr>
+												</thead>
+										
+												<tbody>
+													<tr>
+														<td>1</td>
+														<td>Table cell</td>
+														<td>Table cell</td>
+														<td>Table cell</td>
+														<td>Table cell</td>
+														<td>Table cell</td>
+														<td>Table cell</td>
+													</tr>
+												</tbody>
+												
+											</table>
+										</div>
 									</li>
 									<?php endforeach; ?>
 									

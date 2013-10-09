@@ -67,7 +67,7 @@
 																{
 																	errorPass = true;
 																	
-																	$("#project_cost_of_sale_type_" + data.content[0].cost_of_sale_id).html(data.content[0].type + '<p class="pull-right text-left" id="project_cost_of_sale_budget_' + data.content[0].cost_of_sale_id + '"><b class="number-format">' + data.content[0].budget + '</b> <a href="<?php echo site_url('projects/edit_cos');?>" class="btn btn-primary btn-xs project_edit_cost_of_sale" data-project-id="' + data.content[0].project_id + '" data-cost-of-sale-id="' + data.content[0].cost_of_sale_id + '" style="margin-left: 10px;"><i class="icon-edit"></i></a></p>');
+																	$("#project_cost_of_sale_type_" + data.content[0].cost_of_sale_id).html('<b>' + data.content[0].type + '</b><p class="pull-right text-left" id="project_cost_of_sale_budget_' + data.content[0].cost_of_sale_id + '"><b class="number-format">' + data.content[0].budget + '</b> <a href="<?php echo site_url('projects/edit_cos');?>" class="btn btn-primary btn-xs project_edit_cost_of_sale" data-project-id="' + data.content[0].project_id + '" data-cost-of-sale-id="' + data.content[0].cost_of_sale_id + '" style="margin-left: 10px;"><i class="icon-edit"></i></a></p>');
 																	$(".number-format").prettynumber();
 																	$(".project_edit_cost_of_sale").on('click',function(e){
 																		e.preventDefault();
@@ -94,7 +94,14 @@
 																}
 															},
 															error: function (xhr, ajaxOptions, thrownError) {
-																alert('Error: (' + xhr.status + ' ' + thrownError + ')');
+																if (xhr.status == 200)
+																{
+																	location.reload(true);
+																}
+																else
+																{
+																	alert('Error: (' + xhr.status + ' ' + thrownError + ')');
+																}
 															},
 														});
 													}
