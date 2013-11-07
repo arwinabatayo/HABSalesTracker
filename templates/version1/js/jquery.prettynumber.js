@@ -8,5 +8,5 @@
 			$this.html($this.html().toString().replace(new RegExp("(^\\d{"+($this.html().toString().length%3||-1)+"})(?=\\d{3})"),"$1"+o.delimiter).replace(/(\d{3})(?=\d)/g,"$1"+o.delimiter));
 		});
 	};
-	$.fn.prettynumber.defaults = { delimiter:',' };
+	$.fn.prettynumber.defaults = { delimiter: ',' };
 })(jQuery);

@@ -172,7 +172,7 @@ $autoload['model'] = array(
 	'model_account_managers',
 	
 	'model_cost_of_sales',
-	//'model_cost_of_sales_list',
+	'model_cost_of_sales_budget_track',
 );
 
 

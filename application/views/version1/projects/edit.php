@@ -1,132 +1,145 @@
  	<!-- Page Layout -->
-	<div id="project_form_wrapper_<?php echo $ajax_session_id;?>" class="ajax-wrapper">
-		<div id="project_error_wrapper_<?php echo $ajax_session_id;?>"></div>
-		
-		<?php echo form_open(site_url('projects/edit'),array('role' => 'form','id' => 'project_form_'.$ajax_session_id));?>
+ 	<div class="modal-dialog">
+ 		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"><?php echo lang('projects_edit_project');?></h4>
+			</div>
+			<div class="modal-body">
+			
+			
+				<div id="project_form_wrapper_<?php echo $ajax_session_id;?>" class="ajax-wrapper">
+					<div id="project_error_wrapper_<?php echo $ajax_session_id;?>"></div>
+					
+					<?php echo form_open(site_url('projects/edit'),array('role' => 'form','id' => 'project_form_'.$ajax_session_id));?>
+									
+					<div class="form-group required">
+						<label for="<?php echo $project_name['id'];?>"><?php echo lang('projects_project_name');?></label>
+						<?php echo form_input($project_name); ?>
+					</div>
+					
+					<div class="form-group required">
+						<label for="<?php echo $project_code['id'];?>"><?php echo lang('projects_project_code');?></label>
+						<?php echo form_input($project_code); ?>
+					</div>
+					
+					<div class="form-group required">
+						<label for="<?php echo $project_budget['id'];?>"><?php echo lang('projects_project_budget');?></label>
+						<?php echo form_input($project_budget); ?>
+					</div>
+					
+					<div class="form-group required">
+						<label for="<?php echo $project_department['id'];?>"><?php echo lang('projects_department');?></label>
+						<select name="<?php echo $project_department['name'];?>" id="<?php echo $project_department['id'];?>" class="form-control">
+							<option value="agency"<?php echo ($project_department['value'] == 'agency' ? ' selected="selected"' : null);?>><?php echo lang('global_agency');?></option>
+							<option value="altitude"<?php echo ($project_department['value'] == 'altitude' ? ' selected="selected"' : null);?>><?php echo lang('global_altitude');?></option>
+							<option value="gondola"<?php echo ($project_department['value'] == 'gondola' ? ' selected="selected"' : null);?>><?php echo lang('global_gondola');?></option>
+							<option value="burner"<?php echo ($project_department['value'] == 'burner' ? ' selected="selected"' : null);?>><?php echo lang('global_burner');?></option>
+							<option value="envelope"<?php echo ($project_department['value'] == 'envelope' ? ' selected="selected"' : null);?>><?php echo lang('global_envelope');?></option>
+						</select>
+					</div>
+					
+					<div class="form-group required">
+						<label for="<?php echo $project_client['id'];?>"><?php echo lang('projects_client');?></label>
+						<?php echo form_input($project_client); ?>
+					</div>
+					
+					<div class="form-group required">
+						<label for="<?php echo $project_agency['id'];?>"><?php echo lang('projects_agency');?></label>
+						<?php echo form_input($project_agency); ?>
+					</div>
+					
+					<div class="form-group required">
+						<label for="<?php echo $project_account_manager['id'];?>"><?php echo lang('projects_account_manager');?></label>
+						<?php echo form_input($project_account_manager); ?>
+					</div>
+					
+					<div class="clearfix">
+						<div class="pull-left margin-modal-calendar">
+							<div class="form-group required">
+								<label for="<?php echo $project_campaign_start['id'];?>"><?php echo lang('projects_campaign_start');?></label>
+								<?php echo form_input($project_campaign_start); ?>
+								
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div id="<?php echo $project_campaign_start['id'];?>_inline" data-date="<?php echo $project_campaign_start['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
+									</div>
+								</div>
+							</div>
+						</div>
 						
-		<div class="form-group required">
-			<label for="<?php echo $project_name['id'];?>"><?php echo lang('projects_project_name');?></label>
-			<?php echo form_input($project_name); ?>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_code['id'];?>"><?php echo lang('projects_project_code');?></label>
-			<?php echo form_input($project_code); ?>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_budget['id'];?>"><?php echo lang('projects_project_budget');?></label>
-			<?php echo form_input($project_budget); ?>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_department['id'];?>"><?php echo lang('projects_department');?></label>
-			<select name="<?php echo $project_department['name'];?>" id="<?php echo $project_department['id'];?>" class="form-control">
-				<option value="agency"<?php echo ($project_department['value'] == 'agency' ? ' selected="selected"' : null);?>><?php echo lang('global_agency');?></option>
-				<option value="altitude"<?php echo ($project_department['value'] == 'altitude' ? ' selected="selected"' : null);?>><?php echo lang('global_altitude');?></option>
-				<option value="gondola"<?php echo ($project_department['value'] == 'gondola' ? ' selected="selected"' : null);?>><?php echo lang('global_gondola');?></option>
-				<option value="burner"<?php echo ($project_department['value'] == 'burner' ? ' selected="selected"' : null);?>><?php echo lang('global_burner');?></option>
-				<option value="envelope"<?php echo ($project_department['value'] == 'envelope' ? ' selected="selected"' : null);?>><?php echo lang('global_envelope');?></option>
-			</select>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_client['id'];?>"><?php echo lang('projects_client');?></label>
-			<?php echo form_input($project_client); ?>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_agency['id'];?>"><?php echo lang('projects_agency');?></label>
-			<?php echo form_input($project_agency); ?>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_account_manager['id'];?>"><?php echo lang('projects_account_manager');?></label>
-			<?php echo form_input($project_account_manager); ?>
-		</div>
-		
-		<div class="clearfix">
-			<div class="pull-left margin-modal-calendar">
-				<div class="form-group required">
-					<label for="<?php echo $project_campaign_start['id'];?>"><?php echo lang('projects_campaign_start');?></label>
-					<?php echo form_input($project_campaign_start); ?>
-					
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div id="<?php echo $project_campaign_start['id'];?>_inline" data-date="<?php echo $project_campaign_start['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
+						<div class="pull-left">
+							<div class="form-group required">
+								<label for="<?php echo $project_campaign_end['id'];?>"><?php echo lang('projects_campaign_end');?></label>
+								<?php echo form_input($project_campaign_end); ?>
+								
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div id="<?php echo $project_campaign_end['id'];?>_inline" data-date="<?php echo $project_campaign_end['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
+									</div>
+								</div>
+							</div>
 						</div>
+						
+						<div class="clearfix"></div>
 					</div>
-				</div>
-			</div>
-			
-			<div class="pull-left">
-				<div class="form-group required">
-					<label for="<?php echo $project_campaign_end['id'];?>"><?php echo lang('projects_campaign_end');?></label>
-					<?php echo form_input($project_campaign_end); ?>
 					
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div id="<?php echo $project_campaign_end['id'];?>_inline" data-date="<?php echo $project_campaign_end['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
+					<div class="clearfix">
+						<div class="pull-left margin-modal-calendar">
+							<div class="form-group required">
+								<label for="<?php echo $project_date_filed['id'];?>"><?php echo lang('projects_date_filed');?></label>
+								<?php echo form_input($project_date_filed); ?>
+								
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div id="<?php echo $project_date_filed['id'];?>_inline" data-date="<?php echo $project_date_filed['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
+									</div>
+								</div>
+							</div>
 						</div>
+						
+						<div class="pull-left">
+							<div class="form-group required">
+								<label for="<?php echo $project_date_closed['id'];?>"><?php echo lang('projects_date_closed');?></label>
+								<?php echo form_input($project_date_closed); ?>
+								
+								<div class="panel panel-default">
+									<div class="panel-body">
+										<div id="<?php echo $project_date_closed['id'];?>_inline" data-date="<?php echo $project_date_closed['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="clearfix"></div>
 					</div>
-				</div>
-			</div>
-			
-			<div class="clearfix"></div>
-		</div>
-		
-		<div class="clearfix">
-			<div class="pull-left margin-modal-calendar">
-				<div class="form-group required">
-					<label for="<?php echo $project_date_filed['id'];?>"><?php echo lang('projects_date_filed');?></label>
-					<?php echo form_input($project_date_filed); ?>
 					
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div id="<?php echo $project_date_filed['id'];?>_inline" data-date="<?php echo $project_date_filed['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
-						</div>
+					<div class="form-group required">
+						<label for="<?php echo $project_status['id'];?>"><?php echo lang('projects_status');?></label>
+						<select name="<?php echo $project_status['name'];?>" id="<?php echo $project_status['id'];?>" class="form-control">
+							<option value="<?php echo lang('projects_status_opportunity');?>"<?php echo ($project_status['value'] == lang('projects_status_opportunity') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_opportunity');?></option>
+							<option value="<?php echo lang('projects_status_sent');?>"<?php echo ($project_status['value'] == lang('projects_status_sent') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_sent');?></option>
+							<option value="<?php echo lang('projects_status_for_revision');?>"<?php echo ($project_status['value'] == lang('projects_status_for_revision') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_for_revision');?></option>
+							<option value="<?php echo lang('projects_status_positive_feedback');?>"<?php echo ($project_status['value'] == lang('projects_status_positive_feedback') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_positive_feedback');?></option>
+							<option value="<?php echo lang('projects_status_waiting_for_signed_ce');?>"<?php echo ($project_status['value'] == lang('projects_status_waiting_for_signed_ce') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_waiting_for_signed_ce');?></option>
+							<option value="<?php echo lang('projects_status_closed');?>"<?php echo ($project_status['value'] == lang('projects_status_closed') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_closed');?></option>
+							<option value="<?php echo lang('projects_status_lost');?>"<?php echo ($project_status['value'] == lang('projects_status_lost') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_lost');?></option>
+						</select>
 					</div>
-				</div>
-			</div>
-			
-			<div class="pull-left">
-				<div class="form-group required">
-					<label for="<?php echo $project_date_closed['id'];?>"><?php echo lang('projects_date_closed');?></label>
-					<?php echo form_input($project_date_closed); ?>
 					
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div id="<?php echo $project_date_closed['id'];?>_inline" data-date="<?php echo $project_date_closed['value'];?>" data-date-format="<?php echo lang('projects_date_format');?>"></div>
-						</div>
+					<br />
+					
+					<div class="text-right">
+						<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('global_cancel');?></button>
+						<?php echo form_submit('submit',lang('global_submit'),'class="btn btn-primary"');?>
 					</div>
+										
+					<?php echo form_close();?>
 				</div>
+				
+				
 			</div>
-			
-			<div class="clearfix"></div>
-		</div>
-		
-		<div class="form-group required">
-			<label for="<?php echo $project_status['id'];?>"><?php echo lang('projects_status');?></label>
-			<select name="<?php echo $project_status['name'];?>" id="<?php echo $project_status['id'];?>" class="form-control">
-				<option value="<?php echo lang('projects_status_opportunity');?>"<?php echo ($project_status['value'] == lang('projects_status_opportunity') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_opportunity');?></option>
-				<option value="<?php echo lang('projects_status_sent');?>"<?php echo ($project_status['value'] == lang('projects_status_sent') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_sent');?></option>
-				<option value="<?php echo lang('projects_status_for_revision');?>"<?php echo ($project_status['value'] == lang('projects_status_for_revision') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_for_revision');?></option>
-				<option value="<?php echo lang('projects_status_positive_feedback');?>"<?php echo ($project_status['value'] == lang('projects_status_positive_feedback') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_positive_feedback');?></option>
-				<option value="<?php echo lang('projects_status_waiting_for_signed_ce');?>"<?php echo ($project_status['value'] == lang('projects_status_waiting_for_signed_ce') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_waiting_for_signed_ce');?></option>
-				<option value="<?php echo lang('projects_status_closed');?>"<?php echo ($project_status['value'] == lang('projects_status_closed') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_closed');?></option>
-				<option value="<?php echo lang('projects_status_lost');?>"<?php echo ($project_status['value'] == lang('projects_status_lost') ? ' selected="selected"' : null);?>><?php echo lang('projects_status_lost');?></option>
-			</select>
-		</div>
-		
-		<br />
-		
-		<div class="text-right">
-			<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo lang('global_cancel');?></button>
-			<?php echo form_submit('submit',lang('global_submit'),'class="btn btn-primary"');?>
-		</div>
-							
-		<?php echo form_close();?>
-	</div>
+ 		</div>
+ 	</div>
 	<!-- End Page Layout -->
 	
 	<!-- Script -->

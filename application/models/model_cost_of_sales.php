@@ -21,6 +21,7 @@ class Model_cost_of_sales extends CI_Model
 		$this->db->set('cost_of_sale_id',$cost_of_sale_data['cost_of_sale_id']);
 		$this->db->set('project_id',$cost_of_sale_data['project_id']);
 		$this->db->set('type',$cost_of_sale_data['type']);
+		$this->db->set('source',$cost_of_sale_data['source']);
 		$this->db->set('budget',$cost_of_sale_data['budget']);
 		$this->db->set('created',date('Y-m-d G:i:s'));
 		
@@ -32,6 +33,7 @@ class Model_cost_of_sales extends CI_Model
 	{
 		$this->db->where('cost_of_sale_id',$cost_of_sale_id);
 		$this->db->set('type',$cost_of_sale_data['type']);
+		$this->db->set('source',$cost_of_sale_data['source']);
 		$this->db->set('budget',$cost_of_sale_data['budget']);
 		$this->db->update($this->table_name);
 		return $this->db->affected_rows();
@@ -46,6 +48,16 @@ class Model_cost_of_sales extends CI_Model
 	function getCostOfSaleByProjectId($project_id)
 	{
 		$this->db->where("project_id",$project_id);
+		$this->db->group_by("type");
+		$this->db->order_by("type ASC");
+		$query = $this->db->get($this->table_name);
+		return $query->result();
+	}
+	
+	function getCostOfSaleByTypeAndProjectId($type,$project_id)
+	{
+		$this->db->where("type",$type);
+		$this->db->where("project_id",$project_id);
 		$query = $this->db->get($this->table_name);
 		return $query->result();
 	}
@@ -57,6 +69,7 @@ class Model_cost_of_sales extends CI_Model
 		$query = $this->db->get($this->table_name);
 		return $query->result();
 	}
+	
 	
 	
 	

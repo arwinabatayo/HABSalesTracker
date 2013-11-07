@@ -38,6 +38,7 @@ class Zacl
 			$this->acl->add(new Zend_Acl_Resource('projects/cos'));
 			$this->acl->add(new Zend_Acl_Resource('projects/add_cos'));
 			$this->acl->add(new Zend_Acl_Resource('projects/edit_cos'));
+			$this->acl->add(new Zend_Acl_Resource('projects/budget_track'));
 			
 		
 		// Set permission to Super
@@ -50,6 +51,7 @@ class Zacl
 					'projects/cos',
 					'projects/add_cos',
 					'projects/edit_cos',
+					'projects/budget_track',
 			)
 		);
 	}

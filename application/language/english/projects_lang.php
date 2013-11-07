@@ -51,8 +51,10 @@ $lang['projects_date_input_help_text'] = "Click the input box and select date";
 
 // Cost of sale
 $lang['projects_cost_of_sale'] = "Cost Of Sale";
-$lang['projects_add_new_cost_of_sale'] = "Add New Cost Of Sale";
+$lang['projects_add_cost_of_sale'] = "Add New Cost Of Sale";
 $lang['projects_edit_cost_of_sale'] = "Edit Cost Of Sale";
+$lang['projects_cost_of_sale_source'] = "Source";
+$lang['projects_cost_of_sale_budget'] = "Budget";
 $lang['projects_cost_of_sale_type'] = "Type";
 	$lang['projects_cost_of_sale_display_media'] = "Display Media";
 	$lang['projects_cost_of_sale_social_media'] = "Social Media";
@@ -63,7 +65,23 @@ $lang['projects_cost_of_sale_type'] = "Type";
 	$lang['projects_cost_of_manhours'] = "Manhours";
 	$lang['projects_cost_of_tools'] = "Tools";
 	$lang['projects_cost_of_reserved'] = "Reserved";
-$lang['projects_cost_of_sale_budget'] = "Budget";
+$lang['projects_cost_of_sale_enter_budget'] = "Enter Budget";
+$lang['projects_cost_of_sale_enter_month'] = "Enter Month";
+$lang['projects_cost_of_sale_enter_year'] = "Enter Year";
+	
+// Months
+$lang['projects_cost_of_sale_jan'] = "Jan";
+$lang['projects_cost_of_sale_feb'] = "Feb";
+$lang['projects_cost_of_sale_mar'] = "Mar";
+$lang['projects_cost_of_sale_apr'] = "Apr";
+$lang['projects_cost_of_sale_may'] = "May";
+$lang['projects_cost_of_sale_jun'] = "Jun";
+$lang['projects_cost_of_sale_jul'] = "Jul";
+$lang['projects_cost_of_sale_aug'] = "Aug";
+$lang['projects_cost_of_sale_sep'] = "Sep";
+$lang['projects_cost_of_sale_oct'] = "Oct";
+$lang['projects_cost_of_sale_nov'] = "Nov";
+$lang['projects_cost_of_sale_dec'] = "Dec";
 
 
 
@@ -81,4 +99,6 @@ $lang['projects_action'] = "Action";
 
 
 // Error
-$lang['projects_no_project'] = "Sorry but there's no project in this department :(";
+$lang['projects_no_project'] = "Hey there's no project on the list, why don't you add one?";
+$lang['projects_cost_of_sale_budget_not_number'] = "Use number value";
+$lang['projects_cost_of_sale_budget_not_exists'] = "Cost of sale budget track ID doesn't exists";

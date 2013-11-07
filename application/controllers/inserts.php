@@ -4,7 +4,6 @@ class Inserts extends MY_Controller
 {
 	function index()
 	{
-		/*
 		$super_admin = array(
 			'email' => 'arwin.a@hotairballoongroup.com',
 			'password' => 'olgastrode',
@@ -15,7 +14,6 @@ class Inserts extends MY_Controller
 		);
 		
 		$this->model_users->setNewUser($super_admin);
-		*/
 		
 		/*
 		$add_clients = array(
@@ -60,6 +58,7 @@ class Inserts extends MY_Controller
 		}
 		*/
 		
+		/*
 		$add_clients = array(
 			'Absolute',
 			'Adidas',
@@ -86,5 +85,6 @@ class Inserts extends MY_Controller
 			);
 			sleep(1);
 		}
+		*/
 	}
 }

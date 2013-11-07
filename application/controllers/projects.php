@@ -64,11 +64,24 @@ class Projects extends MY_Controller
 			redirect(site_url('error/notfound'));
 		}
 		
-		$this->assign['project_list'] = $this->model_projects->getAllProjects(); // Project List
+		// Agency
+		$this->assign['project_list_agency'] = $this->model_projects->getProjectByDepartment('agency');
 		
-		#echo '<pre>';
-		#print_r($this->assign['project_list']);
-		#exit;
+		// Altitude
+		$this->assign['project_list_altitude'] = $this->model_projects->getProjectByDepartment('altitude');
+		
+		// Gondola
+		$this->assign['project_list_gondola'] = $this->model_projects->getProjectByDepartment('gondola');
+		
+		// Burner
+		$this->assign['project_list_burner'] = $this->model_projects->getProjectByDepartment('burner');
+		
+		// Envelope
+		$this->assign['project_list_envelope'] = $this->model_projects->getProjectByDepartment('envelope');
+		
+		//echo '<pre>';
+		//print_r($this->assign);
+		//exit;
 		
 		$this->load->view('projects/index',$this->assign);
 	}
@@ -641,13 +654,36 @@ class Projects extends MY_Controller
 		$this->assign['project_data'] = $this->model_projects->getProjectById($this->input->get('project_id'));
 		
 		// Cost of sales
-		$this->assign['project_data'][0]->cost_of_sales = $this->model_cost_of_sales->getCostOfSaleByProjectId($this->input->get('project_id'));
+		$cost_of_sales_all = $this->model_cost_of_sales->getCostOfSaleByProjectId($this->input->get('project_id'));
+		foreach($cost_of_sales_all as $k => $v)
+		{
+			$this->assign['project_data'][0]->cost_of_sales[$cost_of_sales_all[$k]->type] = $this->model_cost_of_sales->getCostOfSaleByTypeAndProjectId($cost_of_sales_all[$k]->type,$this->input->get('project_id'));
+		}
 		
-		/*
-		echo '<pre>';
-		print_r($this->assign['project_data']);
-		exit;
-		*/
+		// Cost of sales budget track
+		foreach($this->assign['project_data'][0]->cost_of_sales as $k => $v)
+		{
+			foreach($v as $i => $j)
+			{
+				//print_r($j);
+				//echo $j->source.'<br />';
+				for($yearCount = YEAR_START; $yearCount <= YEAR_CONS; $yearCount++)
+				{
+					//$j->budget_track[$yearCount] = $this->model_cost_of_sales->getCostOfSalesBudgetTrackByCostOfSalesIdAndProjectIdAndYear($j->cost_of_sale_id,$j->project_id,$yearCount);
+					$temp = $this->model_cost_of_sales_budget_track->getCostOfSalesBudgetTrackByCostOfSalesIdAndProjectIdAndYear($j->cost_of_sale_id,$j->project_id,$yearCount);
+					foreach($temp as $tp => $tt)
+					{
+						$j->budget_track[$yearCount][$temp[$tp]->month] = $temp[$tp];
+					}
+					//echo $yearCount.'<br />';
+				}
+			}
+		}
+		
+		//$this->assign['project_data'][0]->cost_of_sales;
+		//echo '<pre>';
+		//print_r($this->assign['project_data']);
+		//exit;
 		
 		$this->load->view('projects/cos',$this->assign);
 	}
@@ -695,9 +731,13 @@ class Projects extends MY_Controller
 		// Set project id
 		$this->assign['project_data'] = $this->model_projects->getProjectById($this->input->get('project_id'));
 		
-		$this->assign['project_cos_type'] = array( // COS Type
-			'name' => 'project_cos_type_'.$this->assign['project_data'][0]->project_id,
-			'id' => 'project_cos_type_'.$this->assign['project_data'][0]->project_id
+		$this->assign['project_cos_source'] = array( // Source
+			'type' => 'text',
+			'name' => 'project_cos_source_'.$this->assign['project_data'][0]->project_id,
+			'id' => 'project_cos_source_'.$this->assign['project_data'][0]->project_id,
+			'placeholder' => $this->lang->line('projects_cost_of_sale_source'),
+			'title' => $this->lang->line('projects_cost_of_sale_source'),
+			'class' => 'form-control verifyText'
 		);
 		$this->assign['project_cos_budget'] = array( // Budget
 			'type' => 'number',
@@ -707,12 +747,17 @@ class Projects extends MY_Controller
 			'title' => $this->lang->line('projects_cost_of_sale_budget'),
 			'class' => 'form-control verifyInteger'
 		);
+		$this->assign['project_cos_type'] = array( // COS Type
+			'name' => 'project_cos_type_'.$this->assign['project_data'][0]->project_id,
+			'id' => 'project_cos_type_'.$this->assign['project_data'][0]->project_id
+		);
 		
 		// If request post sent
 		if ($_POST)
 		{
-			$this->form_validation->set_rules('project_cos_type_'.$this->assign['project_data'][0]->project_id,$this->lang->line('projects_cost_of_sale_type'),'trim|required');
+			$this->form_validation->set_rules('project_cos_source_'.$this->assign['project_data'][0]->project_id,$this->lang->line('projects_cost_of_sale_source'),'trim|required');
 			$this->form_validation->set_rules('project_cos_budget_'.$this->assign['project_data'][0]->project_id,$this->lang->line('projects_cost_of_sale_budget'),'trim|is_natural_no_zero|required');
+			$this->form_validation->set_rules('project_cos_type_'.$this->assign['project_data'][0]->project_id,$this->lang->line('projects_cost_of_sale_type'),'trim|required');
 			
 			if (!$this->form_validation->run())
 			{
@@ -727,8 +772,9 @@ class Projects extends MY_Controller
 					array(
 						'cost_of_sale_id' => $this->session->userdata('id').time(),
 						'project_id' => $this->assign['project_data'][0]->project_id,
-						'type' => $this->input->post('project_cos_type_'.$this->assign['project_data'][0]->project_id),
+						'source' => $this->input->post('project_cos_source_'.$this->assign['project_data'][0]->project_id),
 						'budget' => $this->input->post('project_cos_budget_'.$this->assign['project_data'][0]->project_id),
+						'type' => $this->input->post('project_cos_type_'.$this->assign['project_data'][0]->project_id),
 					)
 				);
 				
@@ -740,6 +786,10 @@ class Projects extends MY_Controller
 				exit;
 			}
 		}
+		
+		//echo '<pre>';
+		//print_r($this->assign);
+		//exit;
 		
 		$this->load->view('projects/add_cos',$this->assign);
 	}
@@ -798,11 +848,16 @@ class Projects extends MY_Controller
 		// Set cost of sale info
 		$this->assign['cost_of_sale_data'] = $this->model_cost_of_sales->getCostOfSaleByIdAndProjectId($this->input->get('cost_of_sale_id'),$this->input->get('project_id'));
 		
-		$this->assign['project_cos_type'] = array( // COS Type
-			'name' => 'project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
-			'id' => 'project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
-			'value' => $this->assign['cost_of_sale_data'][0]->type,
+		$this->assign['project_cos_source'] = array( // Source
+			'type' => 'text',
+			'name' => 'project_cos_source_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
+			'id' => 'project_cos_source_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
+			'placeholder' => $this->lang->line('projects_cost_of_sale_source'),
+			'title' => $this->lang->line('projects_cost_of_sale_source'),
+			'class' => 'form-control verifyText',
+			'value' => $this->assign['cost_of_sale_data'][0]->source,
 		);
+		
 		$this->assign['project_cos_budget'] = array( // Budget
 			'type' => 'number',
 			'name' => 'project_cos_budget_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
@@ -813,9 +868,11 @@ class Projects extends MY_Controller
 			'value' => $this->assign['cost_of_sale_data'][0]->budget,
 		);
 		
-		#echo '<pre>';
-		#print_r($this->assign);
-		#exit;
+		$this->assign['project_cos_type'] = array( // COS Type
+			'name' => 'project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
+			'id' => 'project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,
+			'value' => $this->assign['cost_of_sale_data'][0]->type,
+		);
 		
 		// If request post sent
 		if ($_POST)
@@ -824,8 +881,9 @@ class Projects extends MY_Controller
 			#echo json_encode(array('is_success' => true));
 			#exit;
 			
-			$this->form_validation->set_rules('project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,$this->lang->line('projects_cost_of_sale_type'),'trim|required');
+			$this->form_validation->set_rules('project_cos_source_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,$this->lang->line('projects_cost_of_sale_source'),'trim|required');
 			$this->form_validation->set_rules('project_cos_budget_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,$this->lang->line('projects_cost_of_sale_budget'),'trim|is_natural_no_zero|required');
+			$this->form_validation->set_rules('project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id,$this->lang->line('projects_cost_of_sale_type'),'trim|required');
 			
 			if (!$this->form_validation->run())
 			{
@@ -839,8 +897,9 @@ class Projects extends MY_Controller
 				$this->model_cost_of_sales->setUpdateCostOfSale(
 					$this->input->get('cost_of_sale_id'),
 					array(
-						'type' => $this->input->post('project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id),
+						'source' => $this->input->post('project_cos_source_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id),
 						'budget' => $this->input->post('project_cos_budget_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id),
+						'type' => $this->input->post('project_cos_type_'.$this->assign['cost_of_sale_data'][0]->cost_of_sale_id),
 					)
 				);
 				
@@ -853,6 +912,128 @@ class Projects extends MY_Controller
 			}
 		}
 		
+		//echo '<pre>';
+		//print_r($this->assign);
+		//exit;
+		
 		$this->load->view('projects/edit_cos',$this->assign);
+	}
+	
+	
+	
+	
+	
+	function budget_track() // Always ajax
+	{
+		// Check if ajax request
+		if (!$this->input->is_ajax_request())
+		{
+			// Redirect to not found
+			redirect(site_url('error/notfound'));
+		}
+		
+		// Check permission
+		if (!$this->zacl->check_acl('projects/budget_track',$this->assign['is_user'][0]->role))
+		{
+			// Throw error
+			//echo json_encode(array('is_error' => true,'errors' => '<div class="alert alert-warning"><p>'.$this->lang->line('global_error_page_not_found').'</p></div>'));
+			//exit;
+			header('HTTP/1.1 404 Not Found');
+			exit($this->lang->line('global_error_page_not_found'));
+		}
+		
+		// Check session
+		if (!$this->input->get('is_ajax') || $this->input->get('ajax_id') != $this->assign['ajax_id'] || $this->input->get('ajax_session_id') != $this->assign['ajax_session_id'])
+		{
+			// Throw error
+			//echo json_encode(array('is_error' => true,'errors' => '<div class="alert alert-warning"><p>'.$this->lang->line('global_error_session_timeout').'</p></div>'));
+			//exit;
+			header('HTTP/1.1 404 Not Found');
+			exit($this->lang->line('global_error_session_timeout'));
+		}
+		
+		// Check if project exists
+		if (!$this->input->post('project_id') || !$this->model_projects->projectIdExists($this->input->post('project_id')))
+		{
+			// Throw error
+			//echo json_encode(array('is_error' => true,'errors' => $this->lang->line('global_error_page_not_found')));
+			//exit;
+			header('HTTP/1.1 404 Not Found');
+			exit($this->lang->line('global_error_page_not_found'));
+		}
+		
+		// Check if cost of sale exists
+		if (!$this->input->post('cost_of_sale_id') || !$this->model_cost_of_sales->costOfSaleIdExists($this->input->post('cost_of_sale_id')))
+		{
+			// Throw error
+			//echo json_encode(array('is_error' => true,'errors' => $this->lang->line('global_error_page_not_found')));
+			//exit;
+			header('HTTP/1.1 404 Not Found');
+			exit($this->lang->line('global_error_page_not_found'));
+		}
+		
+		//echo json_encode(array('is_error' => true,'post' => var_export($_POST,true),'get' => var_export($_GET,true)));
+		//exit;
+		
+		if ($_POST)
+		{
+			$this->form_validation->set_rules('value',$this->lang->line('projects_cost_of_sale_enter_budget'),'trim|is_natural|required');
+			$this->form_validation->set_rules('month',$this->lang->line('projects_cost_of_sale_enter_month'),'trim|is_natural_no_zero|required');
+			$this->form_validation->set_rules('year',$this->lang->line('projects_cost_of_sale_enter_year'),'trim|is_natural_no_zero|required');
+			
+			if (!$this->form_validation->run())
+			{
+				// Throw error
+				header('HTTP/1.1 404 Not Found');
+				exit($this->lang->line('projects_cost_of_sale_budget_not_number'));
+			}
+			else
+			{
+				// Save new cost of sale budget track
+				if (!$this->input->post('pk') || $this->input->post('pk') == 0)
+				{
+					$costOfSaleBudgetTrackIdRequest = $this->model_cost_of_sales_budget_track->setNewCostOfSalesBudgetTrack(
+						array(
+							'cost_of_sale_budget_track_id' => $this->session->userdata('id').time(),
+							'cost_of_sale_id' => $this->input->post('cost_of_sale_id'),
+							'project_id' => $this->input->post('project_id'),
+							'month' => $this->input->post('month'),
+							'year' => $this->input->post('year'),
+							'budget' => $this->input->post('value'),
+						)
+					);
+					
+					// Throw success
+					echo json_encode(array('is_success' => true,'cost_of_sale_budget_track_id' => $costOfSaleBudgetTrackIdRequest));
+					exit;
+				}
+				
+				// Edit cost of sale budget track
+				else if ($this->input->post('pk') && $this->model_cost_of_sales_budget_track->costOfSalesBudgetTrackIdExists($this->input->post('pk')))
+				{
+					// Save updated cost of sale
+					$this->model_cost_of_sales_budget_track->setUpdateCostOfSalesBudgetTrack(
+						$this->input->post('pk'),
+						array(
+							'budget' => $this->input->post('value'),
+						)
+					);
+					
+					// Get new cost sale info
+					$costOfSaleBudgetTrackContent = $this->model_cost_of_sales_budget_track->getCostOfSalesBudgetTrackById($this->input->post('pk'));
+					
+					// Throw success
+					echo json_encode(array('is_success' => true,'content' => $costOfSaleBudgetTrackContent));
+					exit;
+				}
+				
+				// Budget track doesnt exists
+				else
+				{
+					header('HTTP/1.1 404 Not Found');
+					exit($this->lang->line('projects_cost_of_sale_budget_not_exists'));
+				}
+			}
+		}
 	}
 }

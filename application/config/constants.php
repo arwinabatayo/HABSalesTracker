@@ -100,6 +100,11 @@ define('AVATARS_RESIZE_SMALL',			24); //Resize 24 (PX) [24PX]
 #-------------------
 define('SEMAPHORE_API_KEY', 'HwJDGY5PySCPGFYFEonJ');
 
+#-------------------
+# Constants
+#-------------------
+define('YEAR_START', 2013);
+define('YEAR_CONS', date('Y'));
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

@@ -39,7 +39,7 @@
 		echo script_tag(TEMPLATES_DIR.VERSION_DIR.JS_DIR.'modernizr-2.6.2.min.js');
 		
 		// Jquery JS
-		//echo script_tag('http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js');
+		//echo script_tag('http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js');
 		echo script_tag(TEMPLATES_DIR.VERSION_DIR.JS_DIR.'jquery-2.0.3.min.js');
 		
 		// Bootstrap JS
@@ -47,6 +47,13 @@
 		
 		// Slim Scroll
 		echo script_tag(TEMPLATES_DIR.VERSION_DIR.JS_DIR.'jquery.slimscroll.min.js');
+		
+		// Mock Ajax
+		//echo script_tag(TEMPLATES_DIR.VERSION_DIR.JS_DIR.'jquery.mockjax.js');
+		
+		// X-Editable
+		echo link_tag(array('href' => TEMPLATES_DIR.VERSION_DIR.CSS_DIR.'bootstrap-editable.css','rel' => 'stylesheet','type' => 'text/css'));
+		echo script_tag(TEMPLATES_DIR.VERSION_DIR.JS_DIR.'bootstrap-editable.min.js');
 		
 		//Includes (JS/CSS)
 		echo (isset($includes) ? $includes : null);
